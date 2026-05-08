@@ -1,4 +1,4 @@
-package com.kgeorgiev.stackoverflow_users
+package com.kgeorgiev.stackoverflowusers
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

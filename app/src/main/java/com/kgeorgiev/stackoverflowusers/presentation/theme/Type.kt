@@ -1,4 +1,4 @@
-package com.kgeorgiev.stackoverflow_users.ui.theme
+package com.kgeorgiev.stackoverflowusers.presentation.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

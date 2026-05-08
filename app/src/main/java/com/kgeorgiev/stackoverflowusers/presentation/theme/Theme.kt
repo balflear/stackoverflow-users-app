@@ -1,6 +1,5 @@
-package com.kgeorgiev.stackoverflow_users.ui.theme
+package com.kgeorgiev.stackoverflowusers.presentation.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

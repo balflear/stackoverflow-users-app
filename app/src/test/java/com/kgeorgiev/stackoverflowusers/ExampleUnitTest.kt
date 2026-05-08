@@ -1,4 +1,4 @@
-package com.kgeorgiev.stackoverflow_users
+package com.kgeorgiev.stackoverflowusers
 
 import org.junit.Test
 
