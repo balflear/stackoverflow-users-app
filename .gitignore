@@ -34,3 +34,5 @@ google-services.json
 *.hprof
 app/src/main/java/com/kgeorgiev/stackoverflowusers/presentation/.DS_Store
 app/src/main/java/com/kgeorgiev/stackoverflowusers/.DS_Store
+app/src/main/java/com/kgeorgiev/stackoverflowusers/data/.DS_Store
+app/src/main/java/com/kgeorgiev/stackoverflowusers/data/network/.DS_Store

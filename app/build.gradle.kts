@@ -63,6 +63,8 @@ dependencies {
 
     // Network
     implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.logging.interceptor)
 
     // Data-Persistence
     implementation(libs.androidx.room.runtime)
