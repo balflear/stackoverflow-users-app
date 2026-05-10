@@ -11,10 +11,10 @@ data class UsersResponse(
 
 data class UserDto(
     @SerializedName("account_id")
-    val accountId: Int,
+    val accountId: Long,
 
     @SerializedName("user_id")
-    val userId: Int,
+    val userId: Long,
 
     val reputation: Int,
 
