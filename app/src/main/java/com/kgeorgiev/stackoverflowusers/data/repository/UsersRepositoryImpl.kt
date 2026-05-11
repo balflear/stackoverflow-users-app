@@ -18,11 +18,11 @@ class UsersRepositoryImpl @Inject constructor(
         usersApi.getTopUsers().items.map { it.toDomain(isFollowed = it.accountId in followedUsersIds) }
     }
 
-    override suspend fun followUser(accountId: Long) {
+    override suspend fun followUser(accountId: Long) = request {
         followedUsersDao.insertFollowedUser(FollowedUsersEntity(accountId = accountId))
     }
 
-    override suspend fun unfollowUser(accountId: Long) {
+    override suspend fun unfollowUser(accountId: Long) = request {
         followedUsersDao.deleteFollowedUser(accountId)
     }
 }

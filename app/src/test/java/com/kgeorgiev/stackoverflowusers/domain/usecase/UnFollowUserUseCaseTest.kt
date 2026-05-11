@@ -36,7 +36,7 @@ class UnFollowUserUseCaseTest {
     fun unFollowUserSuccess() = runTest {
         // Given
         val accountId = 101L
-        coEvery { usersRepository.followUser(accountId) } returns Unit
+        coEvery { usersRepository.unfollowUser(accountId) } returns Unit
 
         // When
         val result = unFollowUserUseCase(accountId)

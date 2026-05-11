@@ -1,5 +1,6 @@
 package com.kgeorgiev.stackoverflowusers.data.repository
 
+import androidx.sqlite.SQLiteException
 import com.kgeorgiev.stackoverflowusers.UnitTestsHelper.createHttpException
 import com.kgeorgiev.stackoverflowusers.UnitTestsHelper.getUserDtos
 import com.kgeorgiev.stackoverflowusers.UnitTestsHelper.getUsersList
@@ -123,7 +124,7 @@ class UsersRepositoryImplTest {
         // Given
         val sampleUser = getUsersList().first()
 
-        coEvery { usersDao.insertFollowedUser(sampleUser.toEntity()) } throws AppException(error = AppError.LocalStorage)
+        coEvery { usersDao.insertFollowedUser(sampleUser.toEntity()) } throws SQLiteException()
 
         // When
         try {
@@ -154,7 +155,7 @@ class UsersRepositoryImplTest {
         // Given
         val sampleUser = getUsersList().first()
 
-        coEvery { usersDao.deleteFollowedUser(sampleUser.accountId) } throws AppException(error = AppError.LocalStorage)
+        coEvery { usersDao.deleteFollowedUser(sampleUser.accountId) } throws SQLiteException()
 
         // When
         try {

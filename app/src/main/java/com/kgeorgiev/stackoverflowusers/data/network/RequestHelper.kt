@@ -11,6 +11,8 @@ object RequestHelper {
     suspend fun <T> request(block: suspend () -> T): T {
         try {
             return block()
+        } catch (e: AppException) {
+            throw e
         } catch (e: CancellationException) {
             throw e
         } catch (e: IOException) {
