@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">StackOverFlow-Users</string>
     <string name="users_screen_following">Following:</string>
+    <string name="users_screen_top_users">Top 20 Stackoverflow users</string>
 </resources>

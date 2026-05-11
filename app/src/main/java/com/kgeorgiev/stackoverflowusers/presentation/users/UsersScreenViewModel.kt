@@ -23,8 +23,8 @@ class UsersScreenViewModel @Inject constructor(
 
     override suspend fun handleActions(action: UsersActions) {
         when (action) {
-            is UsersActions.FollowUser -> TODO()
-            is UsersActions.UnFollowUser -> TODO()
+            is UsersActions.FollowUser -> followUser(action.accountId)
+            is UsersActions.UnFollowUser -> unFollowUser(action.accountId)
         }
     }
 
@@ -33,6 +33,49 @@ class UsersScreenViewModel @Inject constructor(
             updateState { copy(isLoading = true) }
             val topUsers = getTopUsersUseCase()
             updateState { copy(isLoading = false, usersList = topUsers) }
+        }
+    }
+
+    private suspend fun followUser(accountId: Long) {
+
+        updateState { copy(processingUserIds = processingUserIds + accountId) }
+        followUserUseCase(accountId)
+
+        // Update isFollowed for specific user
+        val updatedUsers = state.value.usersList.map { user ->
+            if (user.accountId == accountId) {
+                user.copy(isFollowed = true)
+            } else {
+                user
+            }
+        }
+
+        updateState {
+            copy(
+                usersList = updatedUsers,
+                processingUserIds = processingUserIds - accountId
+            )
+        }
+    }
+
+    private suspend fun unFollowUser(accountId: Long) {
+        updateState { copy(processingUserIds = processingUserIds + accountId) }
+        unFollowUserUseCase(accountId)
+
+        // Update isFollowed for specific user
+        val updatedUsers = state.value.usersList.map { user ->
+            if (user.accountId == accountId) {
+                user.copy(isFollowed = false)
+            } else {
+                user
+            }
+        }
+
+        updateState {
+            copy(
+                usersList = updatedUsers,
+                processingUserIds = processingUserIds - accountId
+            )
         }
     }
 }

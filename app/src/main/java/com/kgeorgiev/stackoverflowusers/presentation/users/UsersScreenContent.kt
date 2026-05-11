@@ -3,8 +3,10 @@ package com.kgeorgiev.stackoverflowusers.presentation.users
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -27,6 +29,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.kgeorgiev.stackoverflowusers.R
 import com.kgeorgiev.stackoverflowusers.domain.model.User
@@ -49,9 +52,20 @@ fun UsersScreenContent(
         } else if (screenState.errorMessage != null) {
             Text(screenState.errorMessage)
         } else {
+            Text(
+                stringResource(R.string.users_screen_top_users),
+                fontWeight = FontWeight.Bold,
+                fontSize = 18.sp
+            )
+            Spacer(Modifier.height(10.dp))
+
             LazyColumn() {
                 items(items = screenState.usersList, key = { it.accountId }) { item ->
-                    UserMainCard(user = item, onAction = onAction)
+                    UserMainCard(
+                        user = item,
+                        isProcessingUser = item.accountId in screenState.processingUserIds,
+                        onAction = onAction
+                    )
 
                     HorizontalDivider()
                 }
@@ -61,7 +75,7 @@ fun UsersScreenContent(
 }
 
 @Composable
-private fun UserMainCard(user: User, onAction: (UsersActions) -> Unit) {
+private fun UserMainCard(user: User, isProcessingUser: Boolean, onAction: (UsersActions) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -86,13 +100,16 @@ private fun UserMainCard(user: User, onAction: (UsersActions) -> Unit) {
 
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(stringResource(R.string.users_screen_following))
-                Checkbox(checked = user.isFollowed, onCheckedChange = { isChecked ->
-                    if (isChecked) {
-                        onAction(UsersActions.FollowUser(user.accountId))
-                    } else {
-                        onAction(UsersActions.UnFollowUser(user.accountId))
-                    }
-                })
+                Checkbox(
+                    checked = user.isFollowed,
+                    enabled = !isProcessingUser,
+                    onCheckedChange = { isChecked ->
+                        if (isChecked) {
+                            onAction(UsersActions.FollowUser(user.accountId))
+                        } else {
+                            onAction(UsersActions.UnFollowUser(user.accountId))
+                        }
+                    })
             }
         }
     }

@@ -5,7 +5,8 @@ import com.kgeorgiev.stackoverflowusers.domain.model.User
 data class UsersScreenState(
     val isLoading: Boolean = false,
     val usersList: List<User> = emptyList(),
-    val errorMessage: String? = null // TODO add Error type
+    val errorMessage: String? = null, // TODO add Error type
+    val processingUserIds: Set<Long> = emptySet()
 )
 
 sealed interface UsersActions {
