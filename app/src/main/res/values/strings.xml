@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">StackOverFlow-Users</string>
+    <string name="users_screen_following">Following:</string>
 </resources>

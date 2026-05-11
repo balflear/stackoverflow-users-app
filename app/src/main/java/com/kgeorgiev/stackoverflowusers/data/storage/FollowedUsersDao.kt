@@ -17,7 +17,4 @@ interface FollowedUsersDao {
 
     @Query("SELECT accountId FROM followed_users")
     suspend fun getFollowedUserIds(): List<Long>
-
-    @Query("SELECT EXISTS(SELECT 1 FROM followed_users WHERE accountId = :accountId)")
-    suspend fun isUserFollowed(accountId: Long): Boolean
 }
