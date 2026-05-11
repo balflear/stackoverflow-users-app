@@ -75,4 +75,8 @@ dependencies {
     // Images
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
+
+    // Tests
+    testImplementation(libs.mockk)
+    testImplementation(libs.kotlinx.coroutines.test)
 }
