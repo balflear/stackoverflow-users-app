@@ -1,6 +1,7 @@
 package com.kgeorgiev.stackoverflowusers.presentation.users
 
 import androidx.lifecycle.viewModelScope
+import com.kgeorgiev.stackoverflowusers.domain.error.AppException
 import com.kgeorgiev.stackoverflowusers.domain.usecase.FollowUserUseCase
 import com.kgeorgiev.stackoverflowusers.domain.usecase.GetTopUsersUseCase
 import com.kgeorgiev.stackoverflowusers.domain.usecase.UnFollowUserUseCase
@@ -31,8 +32,14 @@ class UsersScreenViewModel @Inject constructor(
     private fun getTopUsers() {
         viewModelScope.launch {
             updateState { copy(isLoading = true) }
-            val topUsers = getTopUsersUseCase()
-            updateState { copy(isLoading = false, usersList = topUsers) }
+            try {
+                val topUsers = getTopUsersUseCase()
+                updateState { copy(usersList = topUsers) }
+            } catch (appException: AppException) {
+                updateState { copy(usersList = emptyList(), error = appException.error) }
+            } finally {
+                updateState { copy(isLoading = false) }
+            }
         }
     }
 

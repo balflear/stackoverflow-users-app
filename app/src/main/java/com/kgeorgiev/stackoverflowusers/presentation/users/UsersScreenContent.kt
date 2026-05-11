@@ -32,7 +32,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.kgeorgiev.stackoverflowusers.R
+import com.kgeorgiev.stackoverflowusers.domain.error.AppError
 import com.kgeorgiev.stackoverflowusers.domain.model.User
+import com.kgeorgiev.stackoverflowusers.presentation.base.getErrorText
 
 @Composable
 fun UsersScreenContent(
@@ -40,6 +42,8 @@ fun UsersScreenContent(
     screenState: UsersScreenState,
     paddingValues: PaddingValues
 ) {
+
+    val errorText = getErrorText(screenState.error)
 
     Column(
         modifier = Modifier
@@ -49,8 +53,8 @@ fun UsersScreenContent(
     ) {
         if (screenState.isLoading) {
             CircularProgressIndicator()
-        } else if (screenState.errorMessage != null) {
-            Text(screenState.errorMessage)
+        } else if (errorText != null) {
+            Text(errorText)
         } else {
             Text(
                 stringResource(R.string.users_screen_top_users),

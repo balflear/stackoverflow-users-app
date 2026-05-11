@@ -1,11 +1,12 @@
 package com.kgeorgiev.stackoverflowusers.presentation.users
 
+import com.kgeorgiev.stackoverflowusers.domain.error.AppError
 import com.kgeorgiev.stackoverflowusers.domain.model.User
 
 data class UsersScreenState(
     val isLoading: Boolean = false,
     val usersList: List<User> = emptyList(),
-    val errorMessage: String? = null, // TODO add Error type
+    val error: AppError? = null,
     val processingUserIds: Set<Long> = emptySet()
 )
 

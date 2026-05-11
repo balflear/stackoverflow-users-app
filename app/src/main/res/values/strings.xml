@@ -2,4 +2,8 @@
     <string name="app_name">StackOverFlow-Users</string>
     <string name="users_screen_following">Following:</string>
     <string name="users_screen_top_users">Top 20 Stackoverflow users</string>
+    <string name="error_local_storage">Error while processing following action</string>
+    <string name="error_network">Error occurs with network connection</string>
+    <string name="error_occurs_with_server">Error occurs with server</string>
+    <string name="unknown_error_please_try_again">Unknown error, please try again.</string>
 </resources>
