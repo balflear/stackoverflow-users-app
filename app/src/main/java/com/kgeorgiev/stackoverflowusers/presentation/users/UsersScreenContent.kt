@@ -1,5 +1,7 @@
 package com.kgeorgiev.stackoverflowusers.presentation.users
 
+import android.widget.Toast
+import android.widget.Toast.makeText
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -20,10 +22,12 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -42,8 +46,19 @@ fun UsersScreenContent(
     screenState: UsersScreenState,
     paddingValues: PaddingValues
 ) {
+    val context = LocalContext.current
+    val screenErrorText = getErrorText(screenState.error)
+    val followedUserErrorText = stringResource(R.string.error_local_storage)
 
-    val errorText = getErrorText(screenState.error)
+    LaunchedEffect(screenState.error) {
+        if (screenState.error == AppError.LocalStorage) {
+            makeText(
+                context,
+                followedUserErrorText,
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -53,8 +68,8 @@ fun UsersScreenContent(
     ) {
         if (screenState.isLoading) {
             CircularProgressIndicator()
-        } else if (errorText != null) {
-            Text(errorText)
+        } else if (screenErrorText != null) {
+            Text(screenErrorText)
         } else {
             Text(
                 stringResource(R.string.users_screen_top_users),
@@ -70,7 +85,6 @@ fun UsersScreenContent(
                         isProcessingUser = item.accountId in screenState.processingUserIds,
                         onAction = onAction
                     )
-
                     HorizontalDivider()
                 }
             }
