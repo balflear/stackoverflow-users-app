@@ -1,7 +1,6 @@
 package com.kgeorgiev.stackoverflowusers.presentation.users
 
 import androidx.lifecycle.viewModelScope
-import com.kgeorgiev.stackoverflowusers.domain.error.AppError
 import com.kgeorgiev.stackoverflowusers.domain.error.AppException
 import com.kgeorgiev.stackoverflowusers.domain.usecase.FollowUserUseCase
 import com.kgeorgiev.stackoverflowusers.domain.usecase.GetTopUsersUseCase
@@ -20,13 +19,17 @@ class UsersScreenViewModel @Inject constructor(
     BaseViewModel<UsersScreenState, UsersActions, Unit>(UsersScreenState()) {
 
     init {
+        // Load users
         getTopUsers()
     }
 
     override suspend fun handleActions(action: UsersActions) {
         when (action) {
-            is UsersActions.FollowUser -> followUser(action.accountId)
-            is UsersActions.UnFollowUser -> unFollowUser(action.accountId)
+            is UsersActions.FollowUser -> followOrUnfollowUser(action.accountId, followUser = true)
+            is UsersActions.UnFollowUser -> followOrUnfollowUser(
+                action.accountId,
+                followUser = false
+            )
         }
     }
 
@@ -44,37 +47,20 @@ class UsersScreenViewModel @Inject constructor(
         }
     }
 
-    private suspend fun followUser(accountId: Long) {
+    private suspend fun followOrUnfollowUser(accountId: Long, followUser: Boolean) {
         updateState { copy(processingUserIds = processingUserIds + accountId, error = null) }
 
         try {
-            followUserUseCase(accountId)
-            // Update isFollowed for specific user
-            val updatedUsers = state.value.usersList.map { user ->
-                if (user.accountId == accountId) {
-                    user.copy(isFollowed = true)
-                } else {
-                    user
-                }
+            if (followUser) {
+                followUserUseCase(accountId)
+            } else {
+                unFollowUserUseCase(accountId)
             }
 
-            updateState { copy(usersList = updatedUsers) }
-        } catch (appException: AppException) {
-            updateState { copy(error = appException.error) }
-        } finally {
-            updateState { copy(processingUserIds = processingUserIds - accountId) }
-        }
-    }
-
-    private suspend fun unFollowUser(accountId: Long) {
-        updateState { copy(processingUserIds = processingUserIds + accountId, error = null) }
-
-        try {
-            unFollowUserUseCase(accountId)
             // Update isFollowed for specific user
             val updatedUsers = state.value.usersList.map { user ->
                 if (user.accountId == accountId) {
-                    user.copy(isFollowed = false)
+                    user.copy(isFollowed = followUser)
                 } else {
                     user
                 }

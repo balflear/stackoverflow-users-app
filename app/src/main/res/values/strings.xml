@@ -6,4 +6,5 @@
     <string name="error_network">Error occurs with network connection</string>
     <string name="error_occurs_with_server">Error occurs with server</string>
     <string name="unknown_error_please_try_again">Unknown error, please try again.</string>
+    <string name="users_screen_reputation">"Reputation: "</string>
 </resources>

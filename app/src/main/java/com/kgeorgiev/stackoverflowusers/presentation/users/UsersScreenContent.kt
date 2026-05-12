@@ -98,7 +98,8 @@ private fun UserMainCard(user: User, isProcessingUser: Boolean, onAction: (Users
         modifier = Modifier
             .fillMaxWidth()
             .padding(10.dp),
-        shape = CardDefaults.elevatedShape
+        shape = CardDefaults.elevatedShape,
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Column(modifier = Modifier.padding(10.dp)) {
             AsyncImage(
@@ -114,7 +115,7 @@ private fun UserMainCard(user: User, isProcessingUser: Boolean, onAction: (Users
             )
 
             Text(user.displayName, fontWeight = FontWeight.Bold)
-            Text("Reputation: " + user.reputation.toString())
+            Text(stringResource(R.string.users_screen_reputation) + user.reputation.toString())
 
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(stringResource(R.string.users_screen_following))
