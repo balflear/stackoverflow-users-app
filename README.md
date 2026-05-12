@@ -43,6 +43,26 @@ Some of the main libraries used in the project are:
 - Kotlin Flow for state and stream handling
 - JUnit and MockK for testing
 
+## How to run
+
+- Clone the repo
+- Open the project in Android Studio
+- Sync Gradle
+- Run the `app` module on an emulator or physical Android device
+- Internet connection is required for loading the users list
+- Minimum supported Android version: 7.0 (SDK 24)
+
+## Technical decisions
+
+- I used Clean Architecture to keep the presentation, domain, and data layers separated.
+- I used MVVM to keep the UI logic separate from the data and business logic.
+- I used MVI-style state handling to keep state updates predictable and easier to follow.
+- I used Kotlin Flow to observe and update screen state in a reactive way that works well with
+  Jetpack Compose.
+- I used Room to persist the users follow state between app sessions.
+- I used a repository to combine the remote API data with the local follow state.
+- I used Hilt for dependency injection.
+
 ## Author
 
 Kostadin Georgiev
