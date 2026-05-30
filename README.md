@@ -1,5 +1,5 @@
 # StackOverflow Users App
-
+`ANDROID MVVM + MVI + CLEAN ARCHITECTURE 2026 EXAMPLE`
 This is a simple native Android application that integrates with the Stack Exchange REST API and
 fetches the top 20 Stack Overflow users by reputation.
 
